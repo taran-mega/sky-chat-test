@@ -40,6 +40,9 @@ async function sendToBackend(){
     
     // Convert Response into JSON
     const data = await response.json();
+    
+    // Return Response
+    return data;
 }
 
 // Function for Managing Request
