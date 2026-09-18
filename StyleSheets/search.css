@@ -17,6 +17,8 @@ body{
     flex-direction: column;
     
     overflow: hidden;
+    
+    user-select: none;
 }
 
 #search-area {

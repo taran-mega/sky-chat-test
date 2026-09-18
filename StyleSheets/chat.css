@@ -12,6 +12,7 @@ body {
     background: #0a1220;
     color: white;
     font-family: Arial, sans-serif;
+    user-select: none;
 }
 
 #chat {
@@ -132,7 +133,7 @@ body {
     border-top: 1px solid #222;
 }
 
-#chat #input-area #message-input {
+#chat #input-area #bar {
     flex: 1;
 
     min-width: 0;
