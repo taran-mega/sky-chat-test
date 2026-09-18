@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang = "en">
+    
+    <!-- HEAD -->
+    <head>
+        
+        <!-- Meta Data -->
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content ="width = device-width, initial-scale = 1.0">
+        
+        <!-- Title -->
+        <title>Sky Chat</title>
+        
+        <!-- CSS -->
+        <link rel = "stylesheet" href = "StyleSheets/chat.css">
+    </head>
+    
+    <!-- BODY -->
+    <body>
+
+        <div id = "chat">
+
+            <!-- Chat Header -->
+            <header id = "chat-header">
+                <div id = "back">‹</div>
+
+                <div id = "user-info">
+                    <div id = "avatar"></div>
+
+                    <div>
+                        <div id = "username"></div>
+                        <div id = "status">Online</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Messages -->
+            <main id = "messages">
+                <!-- All the Messages will appear here -->
+            </main>
+
+            <!-- Message Input -->
+            <footer id = "input-area">
+
+                <input
+                    id = "message-input"
+                    type = "text"
+                    placeholder = "Message..."
+                    autocomplete = "off"
+                >
+
+                <button id = "send-btn">
+                    ➤
+                </button>
+            </footer>
+        </div>
+        
+        <!-- Script -->
+        <script src = "Scripts/chat.js"></script>
+    </body>
+</html>
