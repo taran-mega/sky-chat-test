@@ -74,7 +74,8 @@ async function sendToBackend(msg, receiver_id){
         );
     
         // Make Json
-        const data = response.json();
+        const data = await response.text();
+        addMessage(data, "sent")
     
         // Return Data
         return data;
