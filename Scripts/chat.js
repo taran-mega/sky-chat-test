@@ -69,13 +69,13 @@ async function sendToBackend(receiver_id, msg){
                 body: JSON.stringify({
                     receiver_id: receiver_id,
                     message: msg
-                })
+                }),
+                signal: controller.signal
             }
         );
     
         // Make Json
-        const data = await response.text();
-        addMessage(data, "sent")
+        const data = await response.json();
     
         // Return Data
         return data;
@@ -109,6 +109,7 @@ async function sendMessage(){
     if (response.success){
         
         // Add Message To Screen
+        addMessage(msg, "sent");
         
         // Clear Value from bar
         bar.value = "";
