@@ -45,7 +45,7 @@ function addMessage(message, type){
 }
 
 // Function to send message to backend
-async function sendToBackend(msg, receiver_id){
+async function sendToBackend(receiver_id, msg){
     
     // Start Animation
     sendingText.style.display = "none";
@@ -97,7 +97,7 @@ async function sendToBackend(msg, receiver_id){
 async function sendMessage(){
     
     // Take Value
-    const msg = bar.value.trim;
+    const msg = bar.value.trim();
     
     // Check Value of Message
     if (!msg) return;
