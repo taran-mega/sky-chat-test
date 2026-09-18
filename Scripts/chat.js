@@ -4,6 +4,8 @@ const usernameBox = document.getElementById("username");
 const avatarBox = document.getElementById("avatar");
 const bar = document.getElementById("bar");
 const backBtn = document.getElementById("back");
+const sendingCircle = document.getElementById("sendingCircle");
+const sendingText = document.querySelector("#send-btn #text");
 
 // Get Data from URL
 const params = new URLSearchParams(window.location.search);
@@ -11,6 +13,9 @@ const params = new URLSearchParams(window.location.search);
 // Get Variables from params
 const id = params.get("id");
 const username = params.get("username");
+
+// Variables
+const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
 
 // Function for Initializing Components
 function init(){
@@ -39,17 +44,74 @@ function addMessage(message, type){
     messagesBox.appendChild(messageDiv);
 }
 
+// Function to send message to backend
+async function sendToBackend(msg, receiver_id){
+    
+    // Start Animation
+    sendingText.style.display = "none";
+    sendingCircle.style.display = "block";
+    
+    // Make Controller
+    const controller = new AbortController();
+    
+    // Try to fetch
+    try{
+        
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/send-message`,
+            {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    receiver_id: receiver_id,
+                    message: msg
+                })
+            }
+        );
+    
+        // Make Json
+        const data = response.json();
+    
+        // Return Data
+        return data;
+    }
+    
+    // Catch Error
+    catch(error){}
+    
+    // Final Clause
+    finally{
+        
+        // End sending Animation
+        sendingCircle.style.display = "none";
+        sendingText.style.display = "flex";
+    }
+}
+
 // Function for Sending Message from User
-function sendMessage(){
+async function sendMessage(){
     
     // Take Value
-    const msg = bar.value;
+    const msg = bar.value.trim;
+    
+    // Check Value of Message
+    if (!msg) return;
     
     // Add Message on Screen
-    addMessage(msg, "sent");
+    const response = await sendToBackend(id, msg);
     
-    // Clear Value from bar
-    bar.value = "";
+    // Check Success
+    if (response.success){
+        
+        // Add Message To Screen
+        
+        // Clear Value from bar
+        bar.value = "";
+    }
 }
 
 // Function for make btn(s) working
