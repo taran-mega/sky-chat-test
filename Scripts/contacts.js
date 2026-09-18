@@ -2,8 +2,32 @@
 const contactsList = document.getElementById("contacts-list");
 const emptyState = document.getElementById("empty-state");
 
+// Function to connect current file with chat.html
+function makeConnection(){
+    
+    // Add Event Listener in Contacts List
+    contactsList.addEventListener("click", (event) => {
+        
+        // Choose Contacts
+        const contact = event.target.closest(".contact");
+        
+        // Check Contact Existance
+        if (!contact) return;
+        
+        // Make Variables
+        const id = contact.dataset.id;
+        const username = contact.dataset.username;
+        
+        // Open Chat.html
+        window.top.location.href = "chat.html?id=" + 
+                               encodeURIComponent(id) +
+                               "&username=" +
+                               encodeURIComponent(username);
+    });
+}
+
 // Function for adding Contact on Screen
-function addContact(username){
+function addContact(id, username){
     
     // Create Div
     const div = document.createElement("div");
@@ -11,6 +35,8 @@ function addContact(username){
     
     // Add Content
     div.textContent = username;
+    div.dataset.id = id;
+    div.dataset.username = username;
     
     // Add To Screen
     contactsList.appendChild(div);
@@ -55,9 +81,10 @@ async function manageRequest(){
     for (let item of response){
         
         // Add To Contact
-        addContact(item.username);
+        addContact(item.id, item.username);
     }
 }
 
 // Initial function
+makeConnection();
 manageRequest();
