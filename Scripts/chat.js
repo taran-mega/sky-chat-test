@@ -2,6 +2,8 @@
 const messagesBox = document.getElementById("messages");
 const usernameBox = document.getElementById("username");
 const avatarBox = document.getElementById("avatar");
+const bar = document.getElementById("bar");
+const backBtn = document.getElementById("back");
 
 // Get Data from URL
 const params = new URLSearchParams(window.location.search);
@@ -37,5 +39,37 @@ function addMessage(message, type){
     messagesBox.appendChild(messageDiv);
 }
 
+// Function for Sending Message from User
+function sendMessage(){
+    
+    // Take Value
+    const msg = bar.value;
+    
+    // Add Message on Screen
+    addMessage(msg, "sent");
+    
+    // Clear Value from bar
+    bar.value = "";
+}
+
+// Function for make btn(s) working
+function activeBtns(){
+    
+    // Make Back Btn Working
+    backBtn.onclick = () => {
+        history.back();
+    }
+}
+
+// Make Controls for Keyboard
+window.addEventListener("keydown", (event) => {
+    
+    // "Enter"
+    if (event.key === "Enter"){
+        sendMessage();
+    }
+});
+
 // Call Initial Function(s)
 init();
+activeBtns();

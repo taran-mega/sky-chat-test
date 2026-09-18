@@ -77,12 +77,19 @@ async function manageRequest(){
     // Send Request to Backend
     const response = await sendToBackend();
     
-    // Loop Over the Response
-    for (let item of response){
+    // Try Iter
+    try{
+    
+        // Loop Over the Response
+        for (let item of response){
         
-        // Add To Contact
-        addContact(item.id, item.username);
+            // Add To Contact
+            addContact(item.id, item.username);
+        }
     }
+    
+    // Catch Error
+    catch(error){}
 }
 
 // Initial function
