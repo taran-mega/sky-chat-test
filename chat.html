@@ -48,9 +48,22 @@
                     placeholder = "Message..."
                     autocomplete = "off"
                 >
-
+                
+                <!-- Send Btn -->
                 <button id = "send-btn" onClick = "sendMessage()">
-                    ➤
+                    
+                    <!-- Text -->
+                    <div id = "text">
+                        
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            
+                            <path d="M21.5 3.5L3 10L10.5 13.5L14 21L21.5 3.5Z"/>
+                            <path d="M10.5 13.5L21.5 3.5"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Loading Circle -->
+                    <div class = "loadingCircle" id = "sendingCircle"></div>
                 </button>
             </footer>
         </div>
