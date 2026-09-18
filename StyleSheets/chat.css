@@ -1,3 +1,24 @@
+.loadingCircle{
+    height: 80%;
+    aspect-ratio: 1/1;
+    
+    border: 5px solid #2525a0;
+    border-top-color: white;
+    border-radius: 50%;
+    
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -168,8 +189,34 @@ body {
     font-size: 19px;
 
     cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #chat #input-area #send-btn:active {
     transform: scale(0.92);
+}
+
+#chat #input-area #send-btn #text{
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat #input-area #send-btn #text svg{
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    stroke: #2525a0;
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+}
+
+#chat #input-area #send-btn #sendingCircle{
+    display: none;
 }
