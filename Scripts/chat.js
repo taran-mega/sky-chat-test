@@ -200,7 +200,7 @@ async function init(){
     activeBtns();
     
     // Server Wake-up
-    await serverWakeUp();
+    serverWakeUp();
     
     // After Server Wake-up
     editHTML();
