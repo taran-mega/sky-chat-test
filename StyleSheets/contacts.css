@@ -1,3 +1,24 @@
+.loadingCircle{
+    height: 80%;
+    aspect-ratio: 1/1;
+    
+    border: 5px solid #2525a0;
+    border-top-color: white;
+    border-radius: 50%;
+    
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -99,26 +120,44 @@ body {
     border-color: #4567d8;
 }
 
-#container #box #contacts-list {
+#container #box #loadingScreen{
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container #box #loadingScreen .loadingCircle{
+    width: 100px;
+    height: 100px;
+}
+
+#container #box #main-content{
+    display: none;
+}
+
+#container #box #main-content #contacts-list {
     flex: 1;
     overflow-y: auto;
     padding: 4px 10px 15px;
 }
 
-#container #box #contacts-list::-webkit-scrollbar {
+#container #box #main-content #contacts-list::-webkit-scrollbar {
     width: 6px;
 }
 
-#container #box #contacts-list::-webkit-scrollbar-track {
+#container #box #main-content #contacts-list::-webkit-scrollbar-track {
     background: transparent;
 }
 
-#container #box #contacts-list::-webkit-scrollbar-thumb {
+#container #box #main-content #contacts-list::-webkit-scrollbar-thumb {
     background: #243452;
     border-radius: 10px;
 }
 
-#container #box #contacts-list .contact {
+#container #box #main-content #contacts-list .contact {
     width: 100%;
     min-height: 72px;
 
@@ -138,11 +177,11 @@ body {
     cursor: pointer;
 }
 
-#container #box #contacts-list .contact:hover {
+#container #box #main-content #contacts-list .contact:hover {
     background: #101c2e;
 }
 
-#container #box #contacts-list .contact-avatar {
+#container #box #main-content #contacts-list .contact-avatar {
     width: 48px;
     height: 48px;
 
@@ -160,11 +199,11 @@ body {
     font-weight: 700;
 }
 
-#container #box #contacts-list .contact-info {
+#container #box #main-content #contacts-list .contact-info {
     min-width: 0;
 }
 
-#container #box #contacts-list .contact-info h2 {
+#container #box #main-content #contacts-list .contact-info h2 {
     font-size: 16px;
     font-weight: 600;
 
@@ -173,13 +212,13 @@ body {
     text-overflow: ellipsis;
 }
 
-#container #box #contacts-list .contact-info p {
+#container #box #main-content #contacts-list .contact-info p {
     margin-top: 5px;
     color: #71809a;
     font-size: 13px;
 }
 
-#container #box #empty-state {
+#container #box #main-content #empty-state {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -190,7 +229,7 @@ body {
     text-align: center;
 }
 
-#container #box #empty-state #empty-icon {
+#container #box #main-content #empty-state #empty-icon {
     width: 70px;
     height: 70px;
 
@@ -207,11 +246,11 @@ body {
     font-size: 30px;
 }
 
-#container #box #empty-state h2 {
+#container #box #main-content #empty-state h2 {
     font-size: 19px;
 }
 
-#container #box #empty-state p {
+#container #box #main-content #empty-state p {
     margin-top: 8px;
     color: #687792;
     font-size: 14px;
