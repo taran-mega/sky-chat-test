@@ -116,6 +116,42 @@ async function sendMessage(){
     }
 }
 
+// Function to Load Message from Backend
+async function loadMessages(){
+    
+    // Try To Fetch
+    try{
+        
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/load-messages?contact_id=${encodeURIComponent(id)}`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+        
+        // Convert Data into JSON
+        const data = await response.json();
+        
+        // Check Success
+        if (!data.success) return;
+        
+        // For Every Item
+        data.content.forEach((item) => {
+            
+            // Check Type
+            const type = String(item.sender_id) === String(id)? "received": "sent";
+            
+            // Add Message on Screen
+            addMessage(item.message, type);
+        });
+    }
+    
+    // Catch Error(s)
+    catch(error){}
+}
+
 // Function for make btn(s) working
 function activeBtns(){
     
@@ -137,3 +173,4 @@ window.addEventListener("keydown", (event) => {
 // Call Initial Function(s)
 init();
 activeBtns();
+loadMessages();
