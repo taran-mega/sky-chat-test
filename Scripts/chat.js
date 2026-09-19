@@ -17,8 +17,8 @@ const username = params.get("username");
 // Variables
 const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
 
-// Function for Initializing Components
-function init(){
+// Function for Editing HTML Components
+function editHTML(){
     
     // Change Elements Values of HTML
     usernameBox.textContent = username;
@@ -152,6 +152,29 @@ async function loadMessages(){
     catch(error){}
 }
 
+// Function for awakening Server
+async function serverWakeUp(){
+    
+    // Fetch URL
+    const response = await fetch(
+        `${API_URL}`,
+        {
+            method: "GET"
+        }
+    );
+    
+    // Convert Response to JSON
+    const data = await response.json();
+    
+    // Check Server Result
+    if (data.success){
+        
+        // Load Main Content
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("chat").style.display = "flex";
+    }
+}
+
 // Function for make btn(s) working
 function activeBtns(){
     
@@ -170,7 +193,19 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-// Call Initial Function(s)
+// Function for Call All Initial Function(s)
+async function init(){
+    
+    // Before Server Wake-up
+    activeBtns();
+    
+    // Server Wake-up
+    await serverWakeUp();
+    
+    // After Server Wake-up
+    editHTML();
+    loadMessages();
+}
+
+// Call Initial Function
 init();
-activeBtns();
-loadMessages();

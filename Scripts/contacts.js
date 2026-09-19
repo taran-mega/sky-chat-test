@@ -2,8 +2,12 @@
 const contactsList = document.getElementById("contacts-list");
 const emptyState = document.getElementById("empty-state");
 
-// Function to connect current file with chat.html
-function makeConnection(){
+// Variable
+const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
+    
+
+// Function to connect current contact with chat.html
+function chooseContact(){
     
     // Add Event Listener in Contacts List
     contactsList.addEventListener("click", (event) => {
@@ -48,14 +52,11 @@ function addContact(id, username){
 // Function for sending request to backend
 async function sendToBackend(){
     
-    // Variable
-    API_URL = "https://sky-chat-backend-bl9g.onrender.com";
-    
     // Make Controller
     const controller = new AbortController();
     
     // Fetch URL
-   const response  = await fetch(
+    const response  = await fetch(
         `${API_URL}/get-contacts`,
         {
             method: "GET",
@@ -92,6 +93,39 @@ async function manageRequest(){
     catch(error){}
 }
 
-// Initial function
-makeConnection();
-manageRequest();
+// Function for awakening Server
+async function serverWakeUp(){
+    
+    // Fetch URL
+    const response = await fetch(
+        `${API_URL}`,
+        {
+            method: "GET"
+        }
+    );
+    
+    // Convert Response to JSON
+    const data = await response.json();
+    
+    // Check Server Result
+    if (data.success){
+        
+        // Load Main Content
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+    }
+}
+
+// Function for Calling all Initial function
+async function init(){
+    
+    // Server Wake-up
+    serverWakeUp();
+    
+    // After Server Wake-up
+    chooseContact();
+    manageRequest();
+}
+
+// Call Initial Function
+init();
