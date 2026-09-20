@@ -192,6 +192,8 @@ async function sendToBackend(){
     // Handle Error(s)
     catch(error){
         
+        resultArea.textContent = error;
+        
         // Abort Error
         if(error.name === "AbortError"){
             console.log("previous request is cancelled.");
