@@ -82,13 +82,13 @@ async function makeConnection(main, btn){
                 btn.textContent = "+ Connect";
             }
         }
-    }
     
-    // Catch Error(s)
-    catch(error){
+        // Catch Error(s)
+        catch(error){
         
-        // Change btn Content
-        btn.textContent = "+ Connect";
+            // Change btn Content
+            btn.textContent = "+ Connect";
+        }
     }
 }
 
@@ -142,22 +142,14 @@ function addUserToScreen(id, username, is_connected, is_connection_request_sent,
 // Function for sending request to backend
 async function sendToBackend(){
     
-    resultArea.textContent += "fun called";
-    
     // Cancel Previous Request
     if(controller){controller.abort();}
-    
-    resultArea.textContent += "Controller abort";
     
     // Make Controller for new request
     controller = new AbortController();    
     
-    resultArea.textContent += "Controller created";
-    
     // Start Animation
     toggleLoading("start");
-    
-    resultArea.textContent += "animation started"
     
     // Try Request
     try{
@@ -199,8 +191,6 @@ async function sendToBackend(){
     
     // Handle Error(s)
     catch(error){
-        
-        resultArea.textContent = error;
         
         // Abort Error
         if(error.name === "AbortError"){
