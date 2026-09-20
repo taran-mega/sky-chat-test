@@ -34,19 +34,17 @@ async function makeConnection(main, btn){
     
     // Extract Data from HTML element
     const id = main.dataset.id;
-    const is_connected = main.dataset.isConnected;
-    const is_connection_request_sent = main.dataset.isConnectionRequestSent;
-    const is_connection_request_received = main.dataset.isConnectionRequestReceived;
+    const is_connected = main.dataset.isConnected === "true";
+    const is_connection_request_sent = main.dataset.isConnectionRequestSent === "true";
+    const is_connection_request_received = main.dataset.isConnectionRequestReceived === "true";
     
-    // Change btn Content
-    if (!is_connected ||
-        !is_connection_request_sent ||
+    // Check Conditions
+    if (!is_connected &&
+        !is_connection_request_sent &&
         !is_connection_request_received
     ){
+        // Change btn Content
         btn.textContent = "Requesting";
-    
-        // Make Controller
-        const controller = new AbortController();
     
         // Try to fetch
         try{
@@ -62,8 +60,7 @@ async function makeConnection(main, btn){
                     },
                     body: JSON.stringify({
                         target_id: id
-                    }),
-                    signal: controller.signal
+                    })
                 }
             );
         
@@ -74,7 +71,7 @@ async function makeConnection(main, btn){
             if (data.success){
                 
                 // Update Element Data
-                main.dataset.isConnectionRequestSent = true;
+                main.dataset.isConnectionRequestSent = "true";
                 
                 // Change btn Content
                 btn.textContent = "Requested";
@@ -120,6 +117,12 @@ function addUserToScreen(id, username, is_connected, is_connection_request_sent,
     // Check User Connection
     if (is_connected){
         btn.textContent = "Connected";
+    }
+    else if (is_connection_request_sent){
+        btn.textContent = "Requested";
+    }
+    else if (is_connection_request_received){
+        btn.textContent = "Accept";
     }
     else{
         btn.textContent = "+ Connect";
