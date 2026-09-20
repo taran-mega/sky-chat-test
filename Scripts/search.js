@@ -72,6 +72,7 @@ async function makeConnection(id, btn, is_connected){
         
             // Change btn Content
             btn.textContent = "+ Connect";
+            resultArea.textContent = data;
         }
     }
     
@@ -80,6 +81,7 @@ async function makeConnection(id, btn, is_connected){
         
         // Change btn Content
         btn.textContent = "+ Connect";
+        resultArea.textContent = error;
         
     }
 }
