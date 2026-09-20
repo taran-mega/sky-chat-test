@@ -30,7 +30,7 @@ function toggleLoading(type = "start"){
 }
 
 // Function for Making Connection
-async function makeConnection(main, btn){
+async function makeConnection(main, left, btn){
     
     // Extract Data from HTML element
     const id = main.dataset.id;
@@ -67,6 +67,8 @@ async function makeConnection(main, btn){
             // Convert Response into JSON
             const data = await response.json();
             
+            left.textContent = data;
+            
             // If Connected
             if (data.success){
                 
@@ -93,7 +95,13 @@ async function makeConnection(main, btn){
 }
 
 // Function to adding User on screen
-function addUserToScreen(id, username, is_connected, is_connection_request_sent, is_connection_request_received){
+function addUserToScreen(id,
+                        username,
+                        is_connected,
+                        is_connection_request_sent,
+                        is_connection_request_received,
+                        data
+){
     
     // Make Main Element
     const div = document.createElement("div");
@@ -112,7 +120,7 @@ function addUserToScreen(id, username, is_connected, is_connection_request_sent,
     div.dataset.isConnectionRequestReceived = is_connection_request_received;
     
     // Add Data into Left Content
-    leftDiv.textContent = username;
+    leftDiv.textContent = data;
     
     // Check User Connection
     if (is_connected){
@@ -130,7 +138,7 @@ function addUserToScreen(id, username, is_connected, is_connection_request_sent,
     
     // Add Event Listener to button
     btn.addEventListener("click", () => {
-        makeConnection(div, btn);
+        makeConnection(div, leftDiv, btn);
     })
     
     // Attach Result with Results Screen
@@ -184,7 +192,8 @@ async function sendToBackend(){
                                 item.username,
                                 item.is_connected,
                                 item.is_connection_request_sent,
-                                item.is_connection_request_received);
+                                item.is_connection_request_received,
+                                data);
             }
         }
     }
