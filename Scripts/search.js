@@ -30,49 +30,60 @@ function toggleLoading(type = "start"){
 }
 
 // Function for Making Connection
-async function makeConnection(id, btn, is_connected){
+async function makeConnection(main, btn){
+    
+    // Extract Data from HTML element
+    const id = main.dataset.id;
+    const is_connected = main.dataset.isConnected;
+    const is_connection_request_sent = main.dataset.isConnectionRequestSent;
+    const is_connection_request_received = main.dataset.isConnectionRequestReceived;
     
     // Change btn Content
-    if (!is_connected){
+    if (!is_connected ||
+        !is_connection_request_sent ||
+        !is_connection_request_received
+    ){
         btn.textContent = "Requesting";
-    }
     
-    // Make Controller
-    const controller = new AbortController();
+        // Make Controller
+        const controller = new AbortController();
     
-    // Try to fetch
-    try{
+        // Try to fetch
+        try{
     
-        // Make Request
-        const response = await fetch(
-            `${API_URL}/connection/request`,
-            {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    target_id: id
-                }),
-                signal: controller.signal
+            // Make Request
+            const response = await fetch(
+                `${API_URL}/connection/request`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        target_id: id
+                    }),
+                    signal: controller.signal
+                }
+            );
+        
+            // Convert Response into JSON
+            const data = await response.json();
+            
+            // If Connected
+            if (data.success){
+                
+                // Update Element Data
+                main.dataset.isConnectionRequestSent = true;
+                
+                // Change btn Content
+                btn.textContent = "Requested";
             }
-        );
-        
-        // Convert Response into JSON
-        const data = await response.json();
-        
-        // If Connected
-        if (data.success){
-        
-            // Change btn Content
-            btn.textContent = "Requested";
-        }
-        else{
-        
-            // Change btn Content
-            btn.textContent = "+ Connect";
-            resultArea.textContent = data;
+            else{
+            
+                // Change btn Content
+                btn.textContent = "+ Connect";
+            }
         }
     }
     
@@ -81,15 +92,13 @@ async function makeConnection(id, btn, is_connected){
         
         // Change btn Content
         btn.textContent = "+ Connect";
-        resultArea.textContent = error;
-        
     }
 }
 
 // Function to adding User on screen
-function addUserToScreen(id, username, is_connected){
+function addUserToScreen(id, username, is_connected, is_connection_request_sent, is_connection_request_received){
     
-    // Make MainElement
+    // Make Main Element
     const div = document.createElement("div");
     div.className = "result";
     
@@ -98,6 +107,12 @@ function addUserToScreen(id, username, is_connected){
     
     // Make Right Button
     const btn = document.createElement("button");
+    
+    // Store Data
+    div.dataset.id = id;
+    div.dataset.isConnected = is_connected;
+    div.dataset.isConnectionRequestSent = is_connection_request_sent;
+    div.dataset.isConnectionRequestReceived = is_connection_request_received;
     
     // Add Data into Left Content
     leftDiv.textContent = username;
@@ -112,7 +127,7 @@ function addUserToScreen(id, username, is_connected){
     
     // Add Event Listener to button
     btn.addEventListener("click", () => {
-        makeConnection(id, btn, is_connected);
+        makeConnection(div, btn);
     })
     
     // Attach Result with Results Screen
@@ -162,7 +177,11 @@ async function sendToBackend(){
             for (let item of data.content){
         
                 // Add to Screen
-                addUserToScreen(item.id, item.username, item.is_connected);
+                addUserToScreen(item.id,
+                                item.username,
+                                item.is_connected,
+                                item.is_connection_request_sent,
+                                item.is_connection_request_received);
             }
         }
     }
