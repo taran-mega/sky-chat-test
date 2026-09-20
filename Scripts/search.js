@@ -95,13 +95,14 @@ async function makeConnection(main, left, btn){
 }
 
 // Function to adding User on screen
-function addUserToScreen(id,
-                        username,
-                        is_connected,
-                        is_connection_request_sent,
-                        is_connection_request_received,
-                        data
-){
+function addUserToScreen(item, data){
+    
+    // Take Data from Arguments
+    const id = item.id;
+    const username = item.username;
+    const is_connected = item.is_connected;
+    const is_connection_request_sent = item.is_connection_request_sent;
+    const is_connection_request_received = item.is_connection_request_received;
     
     // Make Main Element
     const div = document.createElement("div");
@@ -188,12 +189,7 @@ async function sendToBackend(){
             for (let item of data.content){
         
                 // Add to Screen
-                addUserToScreen(item.id,
-                                item.username,
-                                item.is_connected,
-                                item.is_connection_request_sent,
-                                item.is_connection_request_received,
-                                data);
+                addUserToScreen(item, data);
             }
         }
     }
