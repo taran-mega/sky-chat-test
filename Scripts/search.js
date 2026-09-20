@@ -33,8 +33,8 @@ function toggleLoading(type = "start"){
 async function makeConnection(id, btn, is_connected){
     
     // Change btn Content
-    if (is_connected){
-        btn.textContent = "Connecting";
+    if (!is_connected){
+        btn.textContent = "Requesting";
     }
     
     // Make Controller
@@ -45,7 +45,7 @@ async function makeConnection(id, btn, is_connected){
     
         // Make Request
         const response = await fetch(
-            `${API_URL}/connect`,
+            `${API_URL}/connection/request`,
             {
                 method: "POST",
                 credentials: "include",
@@ -66,7 +66,7 @@ async function makeConnection(id, btn, is_connected){
         if (data.success){
         
             // Change btn Content
-            btn.textContent = "Connected";
+            btn.textContent = "Requested";
         }
         else{
         
