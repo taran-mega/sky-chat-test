@@ -142,14 +142,22 @@ function addUserToScreen(id, username, is_connected, is_connection_request_sent,
 // Function for sending request to backend
 async function sendToBackend(){
     
+    resultArea.textContent += "fun called";
+    
     // Cancel Previous Request
     if(controller){controller.abort();}
+    
+    resultArea.textContent += "Controller abort";
     
     // Make Controller for new request
     controller = new AbortController();    
     
+    resultArea.textContent += "Controller created";
+    
     // Start Animation
     toggleLoading("start");
+    
+    resultArea.textContent += "animation started"
     
     // Try Request
     try{
@@ -213,13 +221,13 @@ async function sendToBackend(){
 }
 
 // Function for Sending Request from frontend
-async function sendRequest(){
+function sendRequest(){
     
     // Clear Results
     resultArea.innerHTML = "";
    
     // Send To Backend
-    await sendToBackend();
+    sendToBackend();
 }
 
 // Make Control for Keyboard
