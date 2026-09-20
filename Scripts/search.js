@@ -67,7 +67,7 @@ async function makeConnection(main, left, btn){
             // Convert Response into JSON
             const data = await response.json();
             
-            left.textContent = data;
+            left.textContent = JSON.stringify(data);
             
             // If Connected
             if (data.success){
@@ -120,7 +120,7 @@ function addUserToScreen(id,
     div.dataset.isConnectionRequestReceived = is_connection_request_received;
     
     // Add Data into Left Content
-    leftDiv.textContent = data;
+    leftDiv.textContent = JSON.stringify(data);
     
     // Check User Connection
     if (is_connected){
