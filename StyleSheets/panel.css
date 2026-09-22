@@ -20,15 +20,40 @@ body{
 }
 
 #panel{
+    width: 100%;
     height: 60px;
+    
+    background: #1e233b;
     display: flex;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
 }
 
-#panel button {
+#panel .animated-background{
+    position: absolute;
+    z-index: 1;
+    
+    top: 0%;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    
+    transition: left 0.3s ease;
+    
+    background: #303960;
+    border-radius: 15px; 
+}
+
+
+#panel button{
+    position: relative;
+    z-index: 2;
+    
     flex: 1;
     border: none;
     font-size: 16px;
     
-    background: #050430;
+    background: transparent;
     color: white;
 }

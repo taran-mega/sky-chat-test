@@ -1,0 +1,129 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    background: #0a1220;
+    user-select: none;
+}
+
+#container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#container #panel{
+    position: relative;
+    
+    width: 100%;
+    height: 55px;
+    
+    border-bottom: 2px solid #272e4d;
+    display: flex;
+    background: #050912;
+}
+
+#container #panel button{
+    position: relative;
+    z-index: 2;
+    
+    font-size: 16px;
+    font-weight: 600;
+    
+    background: transparent;
+    color: white;
+    
+    flex: 1;
+    border: none;
+    cursor: none;
+}
+
+#container #panel .active{
+    color: #5c40ff;
+    filter: drop-shadow(0 0 10px #5c40ff);
+}
+
+#container #viewport{
+    width: 100%;
+    height: calc(100% - 55px);
+    overflow: hidden;
+}
+
+#container #viewport #slider{
+    width: 200%;
+    height: 100%;
+    
+    display: flex;
+    
+    transform: translateX(0);
+    transition: transform 0.35s ease;
+}
+
+#container #viewport #slider .panel{
+    width: 50%;
+    height: 100%;
+    
+    padding: 20px;
+    flex-shrink: 0;
+    
+    overflow-y: auto;
+    box-sizing: border-box;
+    
+    color: white;
+}
+
+#container #viewport #slider .panel .request{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 10px;
+    margin: 5px 0;
+    
+    width: 100%;
+}
+
+#container #viewport #slider .panel .request #left-div{
+    font-size: 16px;
+}
+
+#container #viewport #slider .panel .request #btns-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    
+    height: 100%;
+}
+
+#container #viewport #slider .panel .request #btns-div div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border: none;
+    border-radius: 10px;
+    
+    min-width: 70px;
+    padding: 6px;
+    background: #37337b;
+    font-size: 12px;
+}
+
+#container #viewport #slider .panel .request #btns-div div:active{
+    transform: scale(0.9);
+    transition: transform 0.25s ease;
+}
+
+#container #viewport #slider .panel .request #btns-div #accept-btn{
+    background: #5c40ff;
+}
