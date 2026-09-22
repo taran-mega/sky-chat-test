@@ -146,7 +146,7 @@ async function sendToBackend(){
         
         // Fetch URL
         const response = await fetch(
-            `${API_URL}`,
+            `${API_URL}/connection/requests`,
             {
                 method: "GET",
                 credentials: "include"
