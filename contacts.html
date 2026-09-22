@@ -1,4 +1,3 @@
-<!-- Version Decleration -->
 <!DOCTYPE html>
 <html lang = "en">
     
@@ -24,45 +23,26 @@
 
             <!-- Box -->
             <section id = "box">
-
-                <!-- Header -->
-                <header id = "header">
-                    <h1>Contacts</h1>
-                    <p id = "contact-count"></p>
-                </header>
-
-                <!-- Search -->
-                <div id = "search-container">
+ 
+                <!-- Panel -->
+                <div id = "panel">
                     
-                    <!-- Search Bar -->
-                    <input
-                        id = "search-bar"
-                        type = "search"
-                        placeholder = "Search contacts..."
-                        autocomplete = "off"
-                    >
+                    <!-- Animated Background -->
+                    <div class = "animated-background"></div>
+                    
+                    <!-- 1. Request -->
+                    <button id = "requests">
+                        Request
+                    </button>
+                    
+                    <!-- 2. Contacts -->
+                    <button id = "contacts">
+                        Current Contacts
+                    </button>
                 </div>
                 
-                <!-- Loading Screen -->
-                <div id = "loadingScreen">
-                    <div class = "loadingCircle"></div>
-                </div>
-                
-                <!-- Main Content -->
-                <div id = "main-content">
-                    
-                    <!-- Contacts -->
-                    <section id = "contacts-list"></section>
-
-                    <!-- Empty State -->
-                    <div id = "empty-state">
-                        <div id = "empty-icon">
-                            👥
-                        </div>
-                        <h2>No contacts</h2>
-                        <p>Your contacts will appear here.</p>
-                    </div>
-                </div>
+                <!-- Iframe -->
+                <iframe id = "page"></iframe>
             </section>
         </main>
         
