@@ -223,6 +223,26 @@ function sendRequest(){
     sendToBackend();
 }
 
+// Function for Sending Message to Parents
+function sendToParent(){
+    
+    // Animation Message
+    window.parent.postMessage({
+        type: "tab",
+        tab: "search"
+    }, "*");
+}
+
+// Function for Calling All Initial Function(s)
+function init(){
+    
+    // Function
+    sendToParent();
+}
+
+// Call Initial Function
+init();
+
 // Make Control for Keyboard
 window.addEventListener("keydown", (event) => {
     

@@ -1,131 +1,58 @@
 // Get Data from HTML
-const contactsList = document.getElementById("contacts-list");
-const emptyState = document.getElementById("empty-state");
+const page = document.getElementById("page");
+const panelSlider = document.querySelector("#panel .animated-background");
 
-// Variable
-const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
+// Function for Handling Page
+function handlePage(){
     
-
-// Function to connect current contact with chat.html
-function chooseContact(){
+    // Get Data from HTML
+    const requestsBtn = document.querySelector("#panel #requests");
+    const contactsBtn = document.querySelector("#panel #contacts");
     
-    // Add Event Listener in Contacts List
-    contactsList.addEventListener("click", (event) => {
-        
-        // Choose Contacts
-        const contact = event.target.closest(".contact");
-        
-        // Check Contact Existance
-        if (!contact) return;
-        
-        // Make Variables
-        const id = contact.dataset.id;
-        const username = contact.dataset.username;
-        
-        // Open Chat.html
-        window.top.location.href = "chat.html?id=" + 
-                               encodeURIComponent(id) +
-                               "&username=" +
-                               encodeURIComponent(username);
+    // Change Src Initially
+    page.src = "current-contacts.html";
+    
+    // Add Event Listener to Btns for Changing Source of Oage
+    requestsBtn.addEventListener("click", () => {
+        page.src = "requests.html";
+    });
+    contactsBtn.addEventListener("click", () => {
+        page.src = "current-contacts.html";
     });
 }
 
-// Function for adding Contact on Screen
-function addContact(id, username){
+// Function for Sending Message to Parents
+function sendToParent(){
     
-    // Create Div
-    const div = document.createElement("div");
-    div.className = "contact";
-    
-    // Add Content
-    div.textContent = username;
-    div.dataset.id = id;
-    div.dataset.username = username;
-    
-    // Add To Screen
-    contactsList.appendChild(div);
-    
-    // Hide Empty State
-    emptyState.style.display = "none";
-}
-
-// Function for sending request to backend
-async function sendToBackend(){
-    
-    // Make Controller
-    const controller = new AbortController();
-    
-    // Fetch URL
-    const response  = await fetch(
-        `${API_URL}/get-contacts`,
-        {
-            method: "GET",
-            credentials: "include",
-            signal: controller.signal
-        }
-    );
-    
-    // Convert Response into JSON
-    const data = await response.json();
-    
-    // Return Response
-    return data;
-}
-
-// Function for Managing Request
-async function manageRequest(){
-    
-    // Send Request to Backend
-    const response = await sendToBackend();
-    
-    // Try Iter
-    try{
-    
-        // Loop Over the Response
-        for (let item of response){
-        
-            // Add To Contact
-            addContact(item.id, item.username);
-        }
-    }
-    
-    // Catch Error
-    catch(error){}
-}
-
-// Function for awakening Server
-async function serverWakeUp(){
-    
-    // Fetch URL
-    const response = await fetch(
-        `${API_URL}`,
-        {
-            method: "GET"
-        }
-    );
-    
-    // Convert Response to JSON
-    const data = await response.json();
-    
-    // Check Server Result
-    if (data.success){
-        
-        // Load Main Content
-        document.getElementById("loadingScreen").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
-    }
+    // Animation Message
+    window.parent.postMessage({
+        type: "tab",
+        tab: "contacts"
+    }, "*");
 }
 
 // Function for Calling all Initial function
 async function init(){
     
-    // Server Wake-up
-    serverWakeUp();
-    
-    // After Server Wake-up
-    chooseContact();
-    manageRequest();
+    // Functions
+    handlePage();
+    sendToParent();
 }
 
 // Call Initial Function
 init();
+
+// Add a Event Listener to Move Animation
+window.addEventListener("message", (event) => {
+    
+    // Check Data Type
+    if (!event.data.type === "tab") return;
+    
+    // Check Current Tab & Move Animation Tab
+    if (event.data.tab === "requests"){
+        panelSlider.style.left = "0%";
+    }
+    else if (event.data.tab === "contacts"){
+        panelSlider.style.left = "50%";
+    }
+});
