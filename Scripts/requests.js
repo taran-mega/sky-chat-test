@@ -156,6 +156,8 @@ async function sendToBackend(){
         // Convert Response into JSON
         const data = await response.json();
         
+        requestsSent.textContent = JSON.stringify(data, null, 2);
+        
         // Check Success
         if (!data.success) return;
         
@@ -173,7 +175,9 @@ async function sendToBackend(){
     }
     
     // Catch Error 
-    catch(error){}
+    catch(error){
+        requestsSent.textContent = error;
+    }
 }
 
 // Function for Sending Message to Parents
