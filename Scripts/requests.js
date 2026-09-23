@@ -6,11 +6,10 @@ const requestsReceived = document.querySelector("#viewport #slider #received");
 const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
 
 // Function for adding requests on Screen
-function addRequest(item){
+function addRequest(item, type){
     
     // Create Variables
     const username = item.username;
-    const type = item.type;
     
     // Create Div(s)
     const div = document.createElement("div");
@@ -156,8 +155,6 @@ async function sendToBackend(){
         // Convert Response into JSON
         const data = await response.json();
         
-        requestsSent.textContent = JSON.stringify(data, null, 2);
-        
         // Check Success
         if (!data.success) return;
         
@@ -175,9 +172,7 @@ async function sendToBackend(){
     }
     
     // Catch Error 
-    catch(error){
-        requestsSent.textContent = error;
-    }
+    catch(error){}
 }
 
 // Function for Sending Message to Parents
