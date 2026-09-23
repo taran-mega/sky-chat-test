@@ -2,8 +2,71 @@
 const requestsSent = document.querySelector("#viewport #slider #sent .box");
 const requestsReceived = document.querySelector("#viewport #slider #received .box");
 
-// URLs
-const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
+// Function for Accepting a request
+async function acceptRequest(parent, div){
+    
+    console.log('yeaj');
+    
+    // Extract Data from Div
+    id = div.dataset.id;
+    
+    // Try to Fetch URL
+    try{
+        
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/connection/request/accept/${id}`,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+        
+        // Convert Response into JSON
+        const data = await response.json();
+        
+        // Check Status
+        if (!data.success) return;
+        
+        // Remove Div from parent
+        parent.removeChild(div);
+    }
+    
+    // Catch Error
+    catch(error){}
+}
+
+// Function for Rejecting a request
+async function rejectRequest(parent, div){
+    
+    // Extract Data from Div
+    id = div.dataset.id;
+    
+    // Try to Fetch URL
+    try{
+        
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/connection/request/reject/${id}`,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+        
+        // Convert Response into JSON
+        const data = await response.json();
+        
+        // Check Status
+        if (!data.success) return;
+        
+        // Remove Div from parent
+        parent.removeChild(div);
+    }
+    
+    // Catch Error
+    catch(error){}
+}
 
 // Function for adding requests on Screen
 function addRequest(item, type){
@@ -15,9 +78,9 @@ function addRequest(item, type){
     const div = document.createElement("div");
     const leftDiv = document.createElement("div");
     const btnsDiv = document.createElement("div");
-    const acceptBtn = document.createElement("div");
-    const rejectBtn = document.createElement("div");
-    const sentBtn = document.createElement("div");
+    const acceptBtn = document.createElement("button");
+    const rejectBtn = document.createElement("button");
+    const sentBtn = document.createElement("button");
     
     // Modify Class(s) & id(s)
     div.className = "request";
@@ -32,6 +95,17 @@ function addRequest(item, type){
     acceptBtn.textContent = "accept";
     rejectBtn.textContent = "reject";
     sentBtn.textContent = "sent";
+    
+    // Set Dataset
+    div.dataset.id = item.id;
+    
+    // Add Event Listener(s)
+    acceptBtn.addEventListener("click", () => {
+        acceptRequest(requestsReceived, div);
+    });
+    rejectBtn.addEventListener("click", () => {
+        rejectRequest(requestsReceived, div);
+    });
     
     // Check Type
     if (type === "sent"){
