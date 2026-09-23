@@ -114,7 +114,7 @@ body{
     height: 100%;
 }
 
-#container #viewport #slider .panel .box .request #btns-div div{
+#container #viewport #slider .panel .box .request #btns-div button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,13 +122,15 @@ body{
     border: none;
     border-radius: 10px;
     
+    background: #37337b;
+    color: white;
+    
     min-width: 70px;
     padding: 6px;
-    background: #37337b;
     font-size: 12px;
 }
 
-#container #viewport #slider .panel .box .request #btns-div div:active{
+#container #viewport #slider .panel .box .request #btns-div button:active{
     transform: scale(0.9);
     transition: transform 0.25s ease;
 }
