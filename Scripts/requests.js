@@ -1,6 +1,6 @@
 // Get Data From HTML
-const requestsSent = document.querySelector("#viewport #slider #sent");
-const requestsReceived = document.querySelector("#viewport #slider #received");
+const requestsSent = document.querySelector("#viewport #slider #sent .box");
+const requestsReceived = document.querySelector("#viewport #slider #received .box");
 
 // URLs
 const API_URL = "https://sky-chat-backend-bl9g.onrender.com";
@@ -39,6 +39,10 @@ function addRequest(item, type){
         // Append Child(s)
         btnsDiv.appendChild(sentBtn);
         requestsSent.appendChild(div);
+        
+        // Change Display(s)
+        requestsSent.style.display = "block";
+        document.querySelector("#slider #sent .empty-state").style.display = "none";
     }
     else if (type === "received"){
         
@@ -46,6 +50,10 @@ function addRequest(item, type){
         btnsDiv.appendChild(acceptBtn);
         btnsDiv.appendChild(rejectBtn);
         requestsReceived.appendChild(div);
+        
+        // Change Display
+        requestsReceived.style.display = "block";
+        document.querySelector("#slider #received .empty-state").style.display = "none";
     }
     
     // Append Child(s)
