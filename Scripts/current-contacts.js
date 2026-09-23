@@ -46,6 +46,7 @@ function addContact(id, username){
     
     // Hide Empty State
     emptyState.style.display = "none";
+    contactsList.style.display = "block";
 }
 
 // Function for sending request to backend for getting Contacts
@@ -66,12 +67,12 @@ async function sendToBackend(){
     // Convert Response into JSON
     const data = await response.json();
     
-    // Check Success
-    if (!data.success) return;
-    
     // Load Main Content
     document.getElementById("loadingScreen").style.display = "none";
     document.getElementById("main-content").style.display = "flex";
+    
+    // Check Success
+    if (!data.success) return;
     
     // Try Iter
     try{
