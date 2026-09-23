@@ -59,29 +59,25 @@ async function sendToBackend(){
         `${API_URL}/get-contacts`,
         {
             method: "GET",
-            credentials: "include",
-            signal: controller.signal
+            credentials: "include"
         }
     );
     
     // Convert Response into JSON
     const data = await response.json();
     
-    // Return Response
-    return data;
-}
-
-// Function for adding Received User on Screen
-async function manageRequest(){
+    // Check Success
+    if (!data.success) return;
     
-    // Send Request to Backend
-    const response = await sendToBackend();
+    // Load Main Content
+    document.getElementById("loadingScreen").style.display = "none";
+    document.getElementById("main-content").style.display = "flex";
     
     // Try Iter
     try{
     
         // Loop Over the Response
-        for (let item of response){
+        for (let item of data.content){
         
             // Add To Contact
             addContact(item.id, item.username);
@@ -90,29 +86,6 @@ async function manageRequest(){
     
     // Catch Error
     catch(error){}
-}
-
-// Function for awakening Server
-async function serverWakeUp(){
-    
-    // Fetch URL
-    const response = await fetch(
-        `${API_URL}`,
-        {
-            method: "GET"
-        }
-    );
-    
-    // Convert Response to JSON
-    const data = await response.json();
-    
-    // Check Server Result
-    if (data.success){
-        
-        // Load Main Content
-        document.getElementById("loadingScreen").style.display = "none";
-        document.getElementById("main-content").style.display = "flex";
-    }
 }
 
 // Function for Sending Message to Parents
@@ -133,7 +106,10 @@ function init(){
     sendToParent();
     
     // Server Wake-up
-    serverWakeUp();
+    sendToBackend();
+    
+    // After Server Wake-up
+    chooseContact();
 }
 
 // Call Initial Function
