@@ -51,7 +51,7 @@ async function makeConnection(main, left, btn){
     
             // Make Request
             const response = await fetch(
-                `${API_URL}/connection/request`,
+                `${API_URL}/connection/request/send`,
                 {
                     method: "POST",
                     credentials: "include",
