@@ -5,8 +5,6 @@ const requestsReceived = document.querySelector("#viewport #slider #received .bo
 // Function for Accepting a request
 async function acceptRequest(parent, div){
     
-    console.log('yeaj');
-    
     // Extract Data from Div
     id = div.dataset.id;
     
