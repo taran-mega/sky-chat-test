@@ -1,0 +1,34 @@
+html, body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: #050912;
+}
+
+.loadingCircle{
+    width: 100px;
+    aspect-ratio: 1/1;
+    
+    border: 5px solid #163742;
+    border-top-color: #55d5ff;
+    border-radius: 50%;
+    
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
