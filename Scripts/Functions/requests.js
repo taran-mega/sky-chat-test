@@ -1,6 +1,35 @@
+// Function for Sending a request
+async function sendRequest(id){
+    
+    // Try to Fetch URL
+    try{
+        
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/connection/request/send/${id}`,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+        
+        // Convert Response into JSON
+        const data = await response.json();
+        
+        // Return Success
+        return data.success;
+    }
+    
+    // Catch Error
+    catch(error){
+        return false;
+    }
+}
+
+
 // Function for Accepting a request
-async function acceptRequest(id, callback){
-    console.log('accept')
+async function acceptRequest(id){
+    
     // Try to Fetch URL
     try{
         
@@ -8,7 +37,7 @@ async function acceptRequest(id, callback){
         const response = await fetch(
             `${API_URL}/connection/request/accept/${id}`,
             {
-                method: "DELETE",
+                method: "POST",
                 credentials: "include"
             }
         );
@@ -16,20 +45,19 @@ async function acceptRequest(id, callback){
         // Convert Response into JSON
         const data = await response.json();
         
-        // Check Status
-        if (!data.success) return;
-        
-        // Callback
-        callback();
+        // Return Success
+        return data.success;
     }
     
     // Catch Error
-    catch(error){}
+    catch(error){
+        return false;
+    }
 }
 
 // Function for Rejecting a request
 async function rejectRequest(id){
-    console.log('reject')
+
     // Try to Fetch URL
     try{
         
@@ -37,7 +65,7 @@ async function rejectRequest(id){
         const response = await fetch(
             `${API_URL}/connection/request/reject/${id}`,
             {
-                method: "DELETE",
+                method: "POST",
                 credentials: "include"
             }
         );
@@ -45,21 +73,20 @@ async function rejectRequest(id){
         // Convert Response into JSON
         const data = await response.json();
         
-        // Check Status
-        if (!data.success) return;
-        
-        // Callback
-        callback();
+        // Return Success
+        return data.success;
     }
     
     // Catch Error
-    catch(error){}
+    catch(error){
+        return false;
+    }
 }
 
 
 // Function for Cancelling a Request
-async function cancleRequest(id){
-    console.log('cancle')
+async function cancelRequest(id){
+    
     // Try To Fetch URL
     try{
         
@@ -67,7 +94,7 @@ async function cancleRequest(id){
         const response = await fetch(
             `${API_URL}/connection/request/cancle/${id}`,
             {
-                method: "DELETE",
+                method: "POST",
                 credentials: "include"
             }
         );
@@ -75,13 +102,12 @@ async function cancleRequest(id){
         // Convert Response into JSON
         const data = await response.json();
         
-        // Check Status
-        if (!data.success) return;
-        
-        // Callback
-        callback();
+        // Return Success
+        return data.success;
     }
     
     // Catch Error
-    catch(error){}
+    catch(error){
+        return false;
+    }
 }
