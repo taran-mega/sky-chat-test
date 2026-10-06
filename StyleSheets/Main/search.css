@@ -91,7 +91,7 @@ body{
  
     height: 50px;
     
-    padding: 0 15px;
+    padding: 5px 15px;
     
     display: flex;
     flex-direction: row;
@@ -99,34 +99,16 @@ body{
     align-items: center;
 }
 
-#results .result button{
-    background: #1562ff;
-    color: white;
-    
-    border: none;
+#results .result div{
+    flex: 1;
+}
+
+#results .result #btnsDiv{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.button{
     border-radius: 10px;
-    
-    padding: 5px 10px;
-}
-
-.loadingCircle{
-    height: 80%;
-    aspect-ratio: 1/1;
-    
-    border: 2px solid #9c95ff;
-    border-radius: 50%;
-    border-top-color: #ffffff;
-    
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin{
-    
-    from{
-        transform: rotate(0deg);
-    }
-    
-    to{
-        transform: rotate(360deg);
-    }
 }
