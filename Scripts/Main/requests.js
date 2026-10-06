@@ -3,7 +3,7 @@ const requestsSent = document.querySelector("#viewport #slider #sent .box");
 const requestsReceived = document.querySelector("#viewport #slider #received .box");
 
 // Function for adding requests on Screen
-function addRequest(item, type){
+async function addRequest(item, type){
     
     // Create Variables
     const username = item.username;
@@ -32,14 +32,33 @@ function addRequest(item, type){
     sentBtn.textContent = "sent";
     
     // Add Event Listener(s)
-    acceptBtn.addEventListener("click", () => {
-        acceptRequest(id, () => {
+    acceptBtn.addEventListener("click", async () => {
+        const success = await acceptRequest(id);
+        
+        // Check Success 
+        if (success){
             requestsReceived.removeChild(div);
-        });
+        }
     });
-    rejectBtn.addEventListener("click", () => {
-        rejectRequest(id, () => {
+    rejectBtn.addEventListener("click", async () => {
+        const success = await rejectRequest(id);
+        
+        // Check Success
+        if (success){
             requestsReceived.removeChild(div);
+        }
+    });
+    sentBtn.addEventListener("click", () => {
+        openPanel("Cancle Request?",
+                  "Do you want to cancel request?",
+                  "Yes",
+                  async () => {
+            const success = await cancleRequest(id);
+            
+            // Check Success
+            if (success){
+                requestsSent.removeChild(div);
+            }
         });
     });
     

@@ -22,124 +22,196 @@ function toggleLoading(type = "start"){
     
     // If not defined well
     else{
-        console.log("Animation toggling argument is not defined well.");
+        console.error("Animation toggling argument is not defined well.");
     }
 }
 
-// Function for Making Connection
-async function makeConnection(main, left, btn){
+// Function for Updating Buttons
+function updateButtons(btnsDiv, id, state){
     
-    // Extract Data from HTML element
-    const id = main.dataset.id;
-    const is_connected = main.dataset.isConnected === "true";
-    const is_connection_request_sent = main.dataset.isConnectionRequestSent === "true";
-    const is_connection_request_received = main.dataset.isConnectionRequestReceived === "true";
+    // Replace Old Items
+    btnsDiv.replaceChildren();
     
-    // Check Conditions
-    if (!is_connected &&
-        !is_connection_request_sent &&
-        !is_connection_request_received
-    ){
-        // Change btn Content
-        btn.textContent = "Requesting";
-    
-        // Try to fetch
-        try{
-    
-            // Make Request
-            const response = await fetch(
-                `${API_URL}/connection/request`,
-                {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        target_id: id
-                    })
+    // Check User Connection
+    if (state.isConnected){
+        
+        // Make Btn
+        const btn = new Button("connected");
+        
+        // Add Task
+        btn.addTask(() => {
+            openPanel(
+                "Remove connection?",
+                "Do you want to remove this connection?",
+                "Remove",
+                () => {
+                    return false;
+                    
+                    // Call Update Function
+                    updateButtons(btnsDiv, id, state);
                 }
             );
+        });
         
-            // Convert Response into JSON
-            const data = await response.json();
-            
-            // If Connected
-            if (data.success){
-                
-                // Update Element Data
-                main.dataset.isConnectionRequestSent = "true";
-                
-                // Change btn Content
-                btn.textContent = "Requested";
-            }
-            else{
-            
-                // Change btn Content
-                btn.textContent = "+ Connect";
-            }
-        }
-    
-        // Catch Error(s)
-        catch(error){
+        // Modify Btn
+        btn.changeSizes({txtSize: "12px", bgWidth: "80px", bgHeight: "30px"});
+        btn.changeColors({bgColor: "#37337b"});
         
-            // Change btn Content
-            btn.textContent = "+ Connect";
-        }
+        // Append in Parent
+        btn.appendInParent(btnsDiv); 
+    }
+    else if (state.isConnectionRequestSent){
+        
+        // Make Btn
+        const btn = new Button("Requested");
+        
+        // Add Task
+        btn.addTask(() => {
+            openPanel(
+                "Cancel Request?",
+                "Do you want to cancel this connection?",
+                "Cancel Request",
+                async () => {
+                    
+                    // Call Request Handler
+                    const success = await cancelRequest(id);
+                    
+                    // Check Success
+                    if (success){
+                        state.isConnectionRequestSent = false;
+                        
+                        // Call Update Function
+                        updateButtons(btnsDiv, id, state);
+                    }
+                    
+                    // Return Success
+                    return success;
+                }
+            );
+        });
+        
+        // Modify Btn
+        btn.changeSizes({txtSize: "12px", bgWidth: "80px", bgHeight: "30px"});
+        btn.changeColors({bgColor: "#37337b"});
+        
+        // Append in Parent
+        btn.appendInParent(btnsDiv);
+    }
+    else if (state.isConnectionRequestReceived){
+        
+        // Make Btn
+        const yesBtn = new Button("accept");
+        const noBtn = new Button("ignore");
+        
+        // Add Task
+        yesBtn.addTask(async () => {
+                
+            // Call Request Handler
+            const success = await acceptRequest(id);
+                
+            // Check Success
+            if (success) {
+                state.isConnected = true;
+                state.isConnectionRequestReceived = false;
+                
+                // Call Update Function
+                updateButtons(btnsDiv, id, state);
+            }
+                
+            // Return Success
+            return success;
+        });
+        
+        // Add Task
+        noBtn.addTask(async () => {
+            
+            // Call Request Handler
+            const success = await rejectRequest(id);
+            
+            // Check Success
+            if (success) {
+                state.isConnectionRequestReceived = false;
+                
+                // Call Update Function
+                updateButtons(btnsDiv, id, state);
+            }
+            
+            // Return Success
+            return success;
+        });
+        
+        // Modify Btn
+        yesBtn.changeSizes({txtSize: "12px", bgWidth: "80px", bgHeight: "30px"});
+        noBtn.changeSizes({txtSize: "12px", bgWidth: "80px", bgHeight: "30px"});
+        noBtn.changeColors({bgColor: "#37337b"});
+        
+        // Append in Parent
+        yesBtn.appendInParent(btnsDiv);
+        noBtn.appendInParent(btnsDiv);
+    }
+    else{
+        
+        // Make Btn
+        const btn = new Button("+ Connect");
+        
+        // Add Task
+        btn.addTask(async () => {
+            
+            // Call Request Handler
+            const success = await sendRequest(id);
+            
+            // Check Success
+            if (success){
+                state.isConnectionRequestSent = true;
+                
+                // Call Update Function
+                updateButtons(btnsDiv, id, state);
+            }
+            
+            // Return Success
+            return success;
+        });
+        
+        // Append in Parent 
+        btn.appendInParent(btnsDiv);
+        
+        // Modify Btn
+        btn.changeSizes({txtSize: "12px", bgWidth: "80px", bgHeight: "30px"});
     }
 }
 
 // Function to adding User on screen
-function addUserToScreen(item, data){
+async function addUserToScreen(item){
     
     // Take Data from Arguments
     const id = item.id;
     const username = item.username;
-    const is_connected = item.is_connected;
-    const is_connection_request_sent = item.is_connection_request_sent;
-    const is_connection_request_received = item.is_connection_request_received;
+    const state = {
+        isConnected: item.is_connected,
+        isConnectionRequestSent: item.is_connection_request_sent,
+        isConnectionRequestReceived: item.is_connection_request_received,
+    };
     
     // Make Main Element
     const div = document.createElement("div");
-    div.className = "result";
     
-    // Make Left Content
+    // Make Size Div(s)
     const leftDiv = document.createElement("div");
+    const btnsDiv = document.createElement("div");
     
-    // Make Right Button
-    const btn = document.createElement("button");
-    
-    // Store Data
-    div.dataset.id = id;
-    div.dataset.isConnected = is_connected;
-    div.dataset.isConnectionRequestSent = is_connection_request_sent;
-    div.dataset.isConnectionRequestReceived = is_connection_request_received;
+    // Add Classes and IDs
+    div.className = "result";
+    btnsDiv.id = "btnsDiv";
     
     // Add Data into Left Content
     leftDiv.textContent = username;
     
-    // Check User Connection
-    if (is_connected){
-        btn.textContent = "Connected";
-    }
-    else if (is_connection_request_sent){
-        btn.textContent = "Requested";
-    }
-    else if (is_connection_request_received){
-        btn.textContent = "Accept";
-    }
-    else{
-        btn.textContent = "+ Connect";
-    }
-    
-    // Add Event Listener to button
-    btn.addEventListener("click", () => {
-        makeConnection(div, leftDiv, btn);
-    })
+    // Call Update Function Initially
+    updateButtons(btnsDiv, id, state);
     
     // Attach Result with Results Screen
     div.appendChild(leftDiv);
-    div.appendChild(btn);
+    div.appendChild(btnsDiv);
     resultArea.appendChild(div);
 }
 
@@ -184,7 +256,7 @@ async function sendToBackend(){
             for (let item of data.content){
         
                 // Add to Screen
-                addUserToScreen(item, data);
+                addUserToScreen(item);
             }
         }
     }
@@ -211,7 +283,7 @@ async function sendToBackend(){
 }
 
 // Function for Sending Request from frontend
-function sendRequest(){
+function search(){
     
     // Clear Results
     resultArea.innerHTML = "";
@@ -247,4 +319,34 @@ window.addEventListener("keydown", (event) => {
     if (event.key === "Enter"){
         sendRequest();
     }
+});
+
+// Test Functions
+addUserToScreen({
+    id: 12,
+    username: "putin",
+    is_connected: true,
+    is_connection_request_sent: false,
+    is_connection_request_received: false
+});
+addUserToScreen({
+    id: 2,
+    username: "hitler",
+    is_connected: false,
+    is_connection_request_sent: true,
+    is_connection_request_received: false
+});
+addUserToScreen({
+    id: 14,
+    username: "meloni",
+    is_connected: false,
+    is_connection_request_sent: false,
+    is_connection_request_received: true
+});
+addUserToScreen({
+    id: 143,
+    username: "kim jon",
+    is_connected: false,
+    is_connection_request_sent: false,
+    is_connection_request_received: false
 });
