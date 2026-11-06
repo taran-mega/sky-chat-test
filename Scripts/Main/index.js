@@ -7,6 +7,7 @@ body.style.fontSize = "20px";
 
 // Function to check authentication of user
 async function checkAuth(){
+    alert('fun called'{);
 
     // Try to Execute
     try{
@@ -21,6 +22,8 @@ async function checkAuth(){
             }
         );
 
+        alert('request made');
+
         // Convert Response into JSON
         const data = await response.json();
 
@@ -30,9 +33,11 @@ async function checkAuth(){
         if (data.success){
 
             window.location.href = "panel.html";
+            alert('panel.html');
         }
         else{
             window.location.href = "auth.html";
+            alert('auth.html');
         }
     }
 
