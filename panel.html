@@ -1,0 +1,51 @@
+<!-- Version Decleration -->
+<!DOCTYPE html>
+<html lang = "en">
+    
+    <!-- HEAD -->
+    <head>
+        
+        <!-- Meta Data -->
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        
+        <!-- Title -->
+        <title>Sky Chat</title>
+        
+        <!-- CSS -->
+        <link rel = "stylesheet" href = "StyleSheets/Main/panel.css">
+    </head>
+    
+    <!-- BODY -->
+    <body>
+
+        <!-- Main Website area -->
+        <iframe
+            id = "page">
+        </iframe>
+
+        <!-- Persistent navigation panel -->
+        <div id = "panel">
+            
+            <!-- Animated Background -->
+            <div class = "animated-background"></div>
+            
+            <!-- 1. Search Button -->
+            <button onclick = "openSearch()" id = "search-btn">
+                🔎 Search
+            </button>
+            
+            <!-- 2. Contacts Button -->
+            <button onclick = "openContacts()" id = "contacts-btn">
+                👥 Contacts
+            </button>
+            
+            <button id = "settings-btn">
+                ⚙️ Settings
+            </button>
+        </div>
+        
+        <!-- Script -->
+        <script src = "Scripts/Main/panel.js"></script>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang = "en">
+    
+    <!-- HEAD -->
+    <head>
+        
+        <!-- Meta Data -->
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        
+        <!-- Title -->
+        <title>Search</title>
+        
+        <!-- CSS -->
+        <link rel = "stylesheet" href = "StyleSheets/Functions/main.css">
+        <link rel = "stylesheet" href = "StyleSheets/Main/search.css">
+    </head>
+    
+    <!-- BODY -->
+    <body>
+        
+        <!-- Main Search Area -->
+        <div id = "search-area">
+            
+            <!-- Search Bar -->
+            <input
+                type = "search"
+                id = "search-bar"
+                placeholder = "Search users..."
+            >
+            
+            <!-- Search Btn -->
+            <button
+            id = "search-btn"
+            onClick = "search()"
+            >
+                <div id = "text">Search</div>
+                <div class = "loading-circle"></div>
+            </button>
+        </div>
+        
+        <!-- Results -->
+        <div id = "results">
+            <!-- Search results will appear here -->
+        </div>
+    
+        <!-- Scripts -->
+        <script src = "Scripts/config.js"></script>
+        <script src = "Scripts/Functions/main.js"></script>
+        <script src = "Scripts/Functions/requests.js"></script>
+        <script src = "Scripts/Main/search.js"></script>
+    </body>
+</html>

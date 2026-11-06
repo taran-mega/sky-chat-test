@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang = "en">
+    
+    <!-- HEAD -->
+    <head>
+        
+        <!-- Meta Data -->
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content ="width = device-width, initial-scale = 1.0">
+        
+        <!-- Title -->
+        <title>Sky Chat</title>
+        
+        <!-- CSS -->
+        <link rel = "stylesheet" href = "StyleSheets/Main/chat.css">
+    </head>
+    
+    <!-- BODY -->
+    <body>
+        
+        <!-- Loading Screen -->
+        <div id = "loadingScreen">
+            <div class = "loadingCircle"></div>
+        </div>
+        
+        <!-- Chat Area -->
+        <div id = "chat">
+
+            <!-- Chat Header -->
+            <header id = "chat-header">
+                <div id = "back">‹</div>
+
+                <div id = "user-info">
+                    <div id = "avatar"></div>
+
+                    <div>
+                        <div id = "username"></div>
+                        <div id = "status">Online</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Messages -->
+            <main id = "messages">
+                <!-- All the Messages will appear here -->
+            </main>
+
+            <!-- Message Input -->
+            <footer id = "input-area">
+
+                <textarea
+                    id = "bar"
+                    placeholder = "Message..."
+                ></textarea>
+                
+                <!-- Send Btn -->
+                <button id = "send-btn" onClick = "sendMessage()">
+                    
+                    <!-- Text -->
+                    <div id = "text">
+                        
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            
+                            <path d="M21.5 3.5L3 10L10.5 13.5L14 21L21.5 3.5Z"/>
+                            <path d="M10.5 13.5L21.5 3.5"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Loading Circle -->
+                    <div class = "loadingCircle" id = "sendingCircle"></div>
+                </button>
+            </footer>
+        </div>
+        
+        <!-- Scripts -->
+        <script src = "Scripts/config.js"></script>
+        <script src = "Scripts/Main/chat.js"></script>
+    </body>
+</html>

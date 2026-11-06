@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sky Chat Test</title>
+</head>
+
+<body>
+
+    <div id="message">HTML works</div>
+
+    <script>
+        document.getElementById("message").textContent =
+            "Inline JavaScript works";
+
+        const script = document.createElement("script");
+
+        script.src = "Scripts/Main/index.js?v=99999";
+
+        script.onload = function(){
+            document.getElementById("message").textContent =
+                "External JavaScript LOADED";
+        };
+
+        script.onerror = function(){
+            document.getElementById("message").textContent =
+                "External JavaScript FAILED";
+        };
+
+        document.body.appendChild(script);
+    </script>
+
+</body>
+
+</html>
