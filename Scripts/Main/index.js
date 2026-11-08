@@ -11,8 +11,6 @@ async function checkAuth(){
 
     // Try to Execute
     try{
-        body.textContent = "function called";
-
         // Make Request
         const response = await fetch(
             `${API_URL}/is-auth`,
