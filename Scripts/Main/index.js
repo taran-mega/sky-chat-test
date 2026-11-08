@@ -1,5 +1,5 @@
 // Get Data from HTML
-const loadingCircle = document.getElementById("loading");
+const loadingCircle = document.getElementById("loading-circle");
 const body = document.body;
 
 body.style.color = "white";
@@ -7,7 +7,7 @@ body.style.fontSize = "20px";
 
 // Function to check authentication of user
 async function checkAuth(){
-    alert('fun called'{);
+    alert('fun called');
 
     // Try to Execute
     try{
@@ -27,8 +27,6 @@ async function checkAuth(){
         // Convert Response into JSON
         const data = await response.json();
 
-        body.textContent = JSON.stringify(data);
-
         // Check Success
         if (data.success){
 
@@ -45,7 +43,7 @@ async function checkAuth(){
     catch (error){
 
         // Add Error to Loading Screen
-        body.textContent = error;
+        alert(error);
     }
 }
 
