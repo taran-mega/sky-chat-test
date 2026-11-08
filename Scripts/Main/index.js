@@ -16,9 +16,9 @@ async function checkAuth(){
         // Make Request
         const response = await fetch(
             `${API_URL}/is-auth`,
-            credentials: "include",
             {
-                method: "GET"
+                method: "GET",
+                credentials: "include"
             }
         );
 
