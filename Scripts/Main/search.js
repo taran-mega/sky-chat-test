@@ -11,13 +11,13 @@ function toggleLoading(type = "start"){
     // If "start"
     if (type === "start"){
         document.querySelector("#search-area #search-btn #text").style.display = "none";
-        document.querySelector("#search-area #search-btn .loadingCircle").style.display = "block";
+        document.querySelector("#search-area #search-btn .loading-circle").style.display = "block";
     }
 
     // If "end"
     else if (type === "end"){
         document.querySelector("#search-area #search-btn #text").style.display = "block";
-        document.querySelector("#search-area #search-btn .loadingCircle").style.display = "none";
+        document.querySelector("#search-area #search-btn .loading-circle").style.display = "none";
     }
 
     // If not defined well
@@ -232,16 +232,13 @@ async function sendToBackend(){
 
         // Establish Connection
         const response = await fetch(
-            `${API_URL}/search-users`,
+            `${API_URL}/search-users?input=${searchBar.value}`,
             {
-                method: "POST",
+                method: "GET",
                 credentials: "include",
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    input: searchBar.value
-                }),
                 signal: controller.signal
             }
         );

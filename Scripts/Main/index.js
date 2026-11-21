@@ -2,12 +2,8 @@
 const loadingCircle = document.getElementById("loading-circle");
 const body = document.body;
 
-body.style.color = "white";
-body.style.fontSize = "20px";
-
 // Function to check authentication of user
 async function checkAuth(){
-    alert('fun called');
 
     // Try to Execute
     try{
@@ -20,8 +16,6 @@ async function checkAuth(){
             }
         );
 
-        alert('request made');
-
         // Convert Response into JSON
         const data = await response.json();
 
@@ -29,20 +23,15 @@ async function checkAuth(){
         if (data.success){
 
             window.location.href = "panel.html";
-            alert('panel.html');
+            sessionStorage.setItem("isAuthentic", "true");
         }
         else{
             window.location.href = "auth.html";
-            alert('auth.html');
         }
     }
 
     // Catch Error
-    catch (error){
-
-        // Add Error to Loading Screen
-        alert(error);
-    }
+    catch (error){}
 }
 
 // call initial function(s)

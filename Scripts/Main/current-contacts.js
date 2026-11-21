@@ -19,7 +19,7 @@ function chooseContact(){
         const username = contact.dataset.username;
 
         // Open Chat.html
-        window.top.location.href = "chat.html?id=" + 
+        window.top.location.href = "chat.html?id=" +
                                encodeURIComponent(id) +
                                "&username=" +
                                encodeURIComponent(username);
@@ -46,41 +46,53 @@ function addContact(id, username){
     contactsList.style.display = "block";
 }
 
-// Function for sending request to backend for getting Contacts
-async function sendToBackend(){
+// Function to Load Message from Backend
+async function loadMessages(){
 
-    // Fetch URL
-    const response  = await fetch(
-        `${API_URL}/get-contacts`,
-        {
-            method: "GET",
-            credentials: "include"
-        }
-    );
-
-    // Convert Response into JSON
-    const data = await response.json();
-
-    // Load Main Content
-    document.getElementById("loadingScreen").style.display = "none";
-    document.getElementById("main-content").style.display = "flex";
-
-    // Check Success
-    if (!data.success) return;
-
-    // Try Iter
+    // Try To Fetch
     try{
 
-        // Loop Over the Response
-        for (let item of data.content){
+        // Fetch URL
+        const response = await fetch(
+            `${API_URL}/message/load-all`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
 
-            // Add To Contact
-            addContact(item.id, item.username);
-        }
+        // Convert Data into JSON
+        const data = await response.json();
+
+        // Check Success
+        if (!data.success) return;
+        
+        // Store Messages in Session Storage
+        sessionStorage.setItem("messages", JSON.stringify(data.content));
     }
 
-    // Catch Error
+    // Catch Error(s)
     catch(error){}
+}
+
+
+// Function to add Event Listeners
+function addEventListeners(){
+    
+    // Event Listener for Adding Contacts
+    window.addEventListener("add_contacts", (event) => {
+        
+        // Loop Over data
+        for (item of event.detail){
+            
+            // Add Contacts
+            addContact(item.id, item.username);
+        }
+        
+        //  Show Main Content
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+    });
 }
 
 // Function for Sending Message to Parents
@@ -93,17 +105,20 @@ function sendToParent(){
     }, "*");
 }
 
+// Function for Calling Server Related Functions
+function serverFun(){
+    loadMessages();
+}
 
 // Function to Call Initial Function
 function init(){
-
-    // Before Server Wake-up
+    
     sendToParent();
-
-    // Server Wake-up
-    sendToBackend();
-
-    // After Server Wake-up
+    addEventListeners();
+    
+    // Server Related Functions
+    serverFun();
+    
     chooseContact();
 }
 

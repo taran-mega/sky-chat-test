@@ -71,7 +71,7 @@ body{
     min-height: 0;
 }
 
-#search-area #search-btn .loadingCircle{
+#search-area #search-btn .loading-circle{
     display: none;
 }
 

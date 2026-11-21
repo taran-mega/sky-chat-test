@@ -122,6 +122,7 @@ async function sendRequest(){
     if (response){
         
         // Redirect
-        window.location.href = "panel.html"
+        window.location.href = "panel.html";
+        sessionStorage.setItem("isAuthentic", "true");
     }
 }
